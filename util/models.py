@@ -8,3 +8,13 @@ class User(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
+
+class Disease(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=500)
+    keywords = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name + "{ "+f'{self.keywords}' +" } "
+
+

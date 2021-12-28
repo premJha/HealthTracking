@@ -12,6 +12,7 @@
 
 <body class="bg-light">
 {% load static %}
+{% load crispy_forms_tags %}
 
 <div class="jumbotron bg-info text-center">
     <h1>Automatic Health Tracking System</h1>
@@ -25,11 +26,19 @@
 
         <div class="col col-md-8 bg-secondary text-white" >
 
-             <form action="saveUser" method="POST">
+             <form action="saveUser" method="POST" role="form" class="form-inline">
               {% csrf_token %}
+               <!--  <div class="form-group">
+                     <label for="name">Name1:</label>
+                     <input type="text" class="form-control" id="name" value="{{ form1.name }}">
+                 </div>
+                 <div class="form-group">
+                     <label for="email">Email:</label>
+                     <input type="text" class="form-control" id="email" value="{{ form1.email }}">
+                 </div>-->
 
 
-              {{ form.as_p }}
+              {{ form|crispy }}
 
                               <button type="submit" class="btn btn-primary">Signup</button>
 
