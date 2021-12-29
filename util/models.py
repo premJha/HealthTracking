@@ -17,4 +17,14 @@ class Disease(models.Model):
     def __str__(self):
         return self.name + "{ "+f'{self.keywords}' +" } "
 
+class Diagnosis(models.Model):
+    name = models.CharField(max_length=50)
+    doctor = models.CharField(max_length=50)
+    hospital = models.CharField(max_length=50)
+    prescription = models.CharField(max_length=500)
+    patient=models.ForeignKey(User,on_delete=models.CASCADE)
+
+
+
+
 

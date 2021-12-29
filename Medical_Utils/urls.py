@@ -22,6 +22,7 @@ from util.views import saveUser
 from util.views import findDisease
 from util.views import prevDiagnosis
 from util.views import addNewDiagnosis
+from util.views import saveNewDiagnosis
 
 admin.site.site_header = "Automatic Health Tracking System Admin"
 admin.site.site_title = "Automatic Health Tracking System Admin Portal"
@@ -38,4 +39,5 @@ urlpatterns = [
     path('prevDiagnosis/', prevDiagnosis, name='prevDiagnosis'),
     path('addNewDiagnosis/', addNewDiagnosis, name='addNewDiagnosis'),
     path('findDisease/', findDisease, name='findDisease'),
+    path('addNewDiagnosis/saveNewDiagnosis/', saveNewDiagnosis, name='saveNewDiagnosis'),
 ]

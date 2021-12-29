@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from .forms import loginForm, UserForm
+from .forms import loginForm, UserForm , DiagnosticsForm
 from .models import User
+from .models import Disease
 
 
+user = {}
 # def thanks(request):
 #    return render(request,'userPage.html')
 def saveUser(request):
@@ -29,20 +31,36 @@ def homePage(request):
 
 
 def findDisease(request):
-    return render(request, "findDisease.html",{'nbar': 'findDisease'})
+    if request.POST:
+        print(" got post")
+        symptom = request.POST['symptom']
+        print(symptom)
+        result= Disease.objects.all().filter(keywords__contains=symptom)
+        print(result)
+        return render(request, "findDisease.html", {'nbar': 'findDisease','diseases':result,'user': user})
+    else:
+        return render(request, "findDisease.html",{'nbar': 'findDisease','user': user})
 
 
 def prevDiagnosis(request):
-    return render(request, 'prevDiagnosis.html',{'nbar': 'prevDiagnosis'})
+    return render(request, 'prevDiagnosis.html',{'nbar': 'prevDiagnosis','user': user})
 
+def saveNewDiagnosis(request):
+    diagnosis = DiagnosticsForm(request.POST)
+    #diagnosis.
+    diagnosis.save(True)
+    return HttpResponseRedirect('/login.html')
 
 def addNewDiagnosis(request):
-    return render(request, 'addNewDiagnosis.html',{'nbar': 'addNewDiagnosis'})
+    form = DiagnosticsForm()
+    context = {}
+    context['form'] = form
+    return render(request, 'addNewDiagnosis.html',{'nbar': 'addNewDiagnosis','user': user,'form':form})
 
 
 def login(request):
     print("From login:", request.POST)
-    user = {}
+
 
     if request.method == 'POST':
         form = loginForm(request.POST)
@@ -61,6 +79,7 @@ def login(request):
                 messages.error(request, "Wrong user or password")
                 return render(request, 'home.html')
             else:
+                request.session['user']=user
                 return render(request, 'userPage.html', {'user': user})
 
             # return HttpResponseRedirect('thanks/')

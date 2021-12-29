@@ -4,11 +4,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prev Diagnosis</title>
+    <title>Add Diagnosis</title>
 </head>
 <body>
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
-<h1>Add New Diagnosis</h1>
+<h1>Add New Diagnosis12</h1>
+
+<div class="container">
+		       <div class="row">
+
+
+		           <div class="col col-md-8 bg-secondary text-white" >
+
+		                <form action="{% url 'saveNewDiagnosis' %}" method="POST" role="form" class="form-inline">
+		                 {% csrf_token %}
+		                 {{ form|crispy }}
+		                                 <button type="submit" class="btn btn-primary">Save</button>
+
+		             </form>
+		           </div>
+
 {% endblock %}
 
 </body>
