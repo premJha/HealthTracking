@@ -10,8 +10,11 @@
 <body>
 {% block content %}
 
+</br>
+</br>
+</br>
 
-<h1>Find Disease</h1>
+<h1 class="text-center">Find Disease</h1>
 <form method="POST" action="{% url 'findDisease' %}">
     {% csrf_token %}
     <input class="form-control me-2" type="search" placeholder="Enter Symptom" name="symptom">
@@ -20,19 +23,22 @@
 
 
 {% if diseases %}
-<h3>Possible Disease</h3>
+</br>
+</br>
+</br>
+<h3 class="text-center text-danger">Possible Disease</h3>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Symproms</th>
+                <th class="text-success">Name</th>
+                <th class="text-success">Description</th>
+                <th class="text-success">Symproms</th>
             </tr>
         </thead>
         <tbody>
             {% for disease in diseases %}
             <tr>
-                <td>{{ disease.name }}</td>
+                <td class="text-danger">{{ disease.name }}</td>
                 <td>{{ disease.description }}</td>
                 <td>{{ disease.keywords }}</td>
             </tr>

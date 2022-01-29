@@ -9,12 +9,20 @@
 </head>
 <body>
 
-Welcome {{ user.name }}
+<div class="jumbotron bg-info text-center">
+    <h1>Automatic Health Tracking System</h1>
 
+</div>
+<div class="jumbotron bg-info text-left">
+     <h2>Welcome {{ user.name }}</h2>
 
+</div>
 
 
 <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="{% url 'detail'  %}" class="nav-link " >My Details</a>
+    </li>
     <li class="nav-item">
         <!--<a href="{% url 'prevDiagnosis' %}" class="nav-link active">My Previous Diagnosis</a>-->
         <a href="{% url 'prevDiagnosis' %}" class="nav-link {% if nbar == 'prevDiagnosis' %}active{% endif %}" >My Previous Diagnosis</a>

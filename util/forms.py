@@ -14,6 +14,12 @@ class UserForm(ModelForm):
         model = User
         fields = ['name', 'password', 'age', 'gender', 'city']
 
+class DiagnosticsForm1(forms.Form):
+    name = forms.CharField(label='name')
+    doctor = forms.CharField(label='doctor')
+    prescription = forms.CharField(label='prescription')
+    hospital = forms.CharField(label='hospital')
+    user = forms.CharField(label='user')
 
 class DiagnosticsForm(ModelForm):
     class Meta:

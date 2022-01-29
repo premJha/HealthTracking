@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from .forms import loginForm, UserForm , DiagnosticsForm
+from .forms import loginForm, UserForm, DiagnosticsForm, DiagnosticsForm1
 from .models import User
 from .models import Disease
+from .models import Diagnosis
 
 
 user = {}
@@ -43,16 +44,57 @@ def findDisease(request):
 
 
 def prevDiagnosis(request):
-    return render(request, 'prevDiagnosis.html',{'nbar': 'prevDiagnosis','user': user})
+    print(user)
+#    print("Previous dignosis :"+user.name)
+    patient= User.objects.all().filter(name=user['name']).first()
+    print(patient)
+    diagnosisList=[d for d in Diagnosis.objects.all().filter(patient=patient)]
+    print(diagnosisList)
+    return render(request, 'prevDiagnosis.html',{'nbar': 'prevDiagnosis','user': user,'diagnosisList':diagnosisList})
+
+def saveNewDiagnosis1(request):
+    print("Saving Diagnosis")
+    if request.method == 'POST':
+        form = DiagnosticsForm1(request.POST)
+        if form.is_valid():
+            name=form.cleaned_data['name']
+            doctor=form.cleaned_data['doctor']
+
+            print("Received "+name+" doc: "+doctor)
+
+def detail(request):
+    patient = User.objects.all().filter(name=user['name']).first()
+#    print("patient"+patient)
+    return render(request,'userDetail.html',{ 'user': user,'patient':patient})
+
+
 
 def saveNewDiagnosis(request):
-    diagnosis = DiagnosticsForm(request.POST)
+    #diagnosis = DiagnosticsForm(request.POST)
+    diagnosis=DiagnosticsForm1(request.POST)
+    if diagnosis.is_valid():
+        name = diagnosis.cleaned_data['name']
+        doctor = diagnosis.cleaned_data['doctor']
+        hospital = diagnosis.cleaned_data['hospital']
+        prescription = diagnosis.cleaned_data['prescription']
+        user = diagnosis.cleaned_data['user']
+
+        print("Received " + name + " doc: " + doctor+" hosp:"+hospital+" prescr:"+prescription+" user:"+user)
+
+        patient = User.objects.all().filter(name=user).first()
+
+        print(patient)
+        diagnosis1=Diagnosis(name=name,doctor=doctor,hospital=hospital,prescription=prescription,patient=patient)
+        diagnosis1.save()
+    return render(request, 'addNewDiagnosis.html', { 'user': user, 'form': diagnosis})
+
     #diagnosis.
-    diagnosis.save(True)
-    return HttpResponseRedirect('/login.html')
+    #diagnosis.save(True)
+   # return HttpResponseRedirect('/login.html')
 
 def addNewDiagnosis(request):
-    form = DiagnosticsForm()
+    #form = DiagnosticsForm()
+    form = DiagnosticsForm1()
     context = {}
     context['form'] = form
     return render(request, 'addNewDiagnosis.html',{'nbar': 'addNewDiagnosis','user': user,'form':form})

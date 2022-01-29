@@ -14,32 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from util.views import homePage
 from util.views import login
 from util.views import signup
 from util.views import saveUser
 from util.views import findDisease
 from util.views import prevDiagnosis
-from util.views import addNewDiagnosis
-from util.views import saveNewDiagnosis
+from  util.views import DiagnosticsForm1
 from util.views import detail
 
-admin.site.site_header = "Automatic Health Tracking System Admin"
-admin.site.site_title = "Automatic Health Tracking System Admin Portal"
-admin.site.index_title = "Welcome to Automatic Health Tracking System"
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', homePage),
-    path('login', login),
-    path('thanks/', login),
-    path('signup/', signup),
-    path('signup/saveUser', saveUser),
-    #path('', include(('util.urls',util), namespace='util'))
-    path('prevDiagnosis/', prevDiagnosis, name='prevDiagnosis'),
-    path('addNewDiagnosis/', addNewDiagnosis, name='addNewDiagnosis'),
-    path('findDisease/', findDisease, name='findDisease'),
-    path('addNewDiagnosis/saveNewDiagnosis/', saveNewDiagnosis, name='saveNewDiagnosis'),
-    path('detail', detail, name='detail'),
+    path('findDisease/', findDisease),
+    path('prevDiagnosis/', prevDiagnosis),
 ]
